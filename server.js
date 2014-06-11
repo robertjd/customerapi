@@ -40,10 +40,25 @@ function routeHandler(req,res) {
         // then construct a responst accordingly
 
         var scopeList = authResult.requestedScopes.join(', ');
+        var message = "Your token is valid, you have these scopes: " + scopeList;
+        res.write(JSON.stringify({message: message}));
+      }else{
 
-        res.write(JSON.stringify({
-          message:"You are allowed to have these scopes: " + scopeList
-        }));
+        // this was a basic API auth request, so do what you want
+        // for the given resource URI now that the client is
+        // authenticated
+        authResult.getAccount(function(err,account){
+          if(err){
+            throw err; // actually you should deal with it :)
+          }else{
+            var message = 'Thanks, ' +
+              account.username +
+              ', for authenticating!  You asked for ' +
+              req.url;
+            res.write(JSON.stringify({message:message}));
+          }
+        });
+
       }
 
     }
