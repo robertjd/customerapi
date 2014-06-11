@@ -1,0 +1,14 @@
+{
+  "name": "customerapi",
+  "version": "0.0.0",
+  "description": "demo api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect": "^2.19.5"
+  }
+}
