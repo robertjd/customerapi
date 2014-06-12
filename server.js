@@ -6,7 +6,8 @@ function routeHandler(req,res) {
 
   /* catchall route handler, will handle all http requests to this server */
 
-  var isOauthTokenRequest = req.url === '/oauth/token';
+  /* this emulates a situation where the SDK knows nothing about the
+  request, other than what can be read from the request itself */
 
   stormpathApplication.authenticateApiRequest(req,function(err,authResult){
 
@@ -22,12 +23,13 @@ function routeHandler(req,res) {
     }else{
       res.setHeader('content-type','application/json');
 
-      if(isOauthTokenRequest){
+      if(authResult.getTokenResponse){
 
-        // they asked for a token and were successfuly validated
-        // with the credentials they supplied
-        // now to some logic to determine what scopes the can have
-        // and then send them a toke
+        // this is one way of knowing if they successfully AND successfully
+        // exchanged their credentials for a token
+
+        // now do some logic to determine what scopes they can have
+        // and then send them the token response
 
         authResult.addScope('all-the-things');
         authResult.addScope('plus-some');
